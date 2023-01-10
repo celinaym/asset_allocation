@@ -8,12 +8,13 @@ import yfinance as yf
 yf.pdr_override()
 
 
-class SAA_Permanent:
+class SAA_GoldenButterfly:
     """
-    stock: 25% (VTI 미국 전체 주식)
-    bond: 25% (TLT 미국 장기체)
-    cash or short-term bond 25%, 단기채(SHY 미 단기체)
-    gold 25% (GLD)
+    stock: 20% (VTISX 미국 전체 주식)
+    small_cap value index fund: 20% (VBR)
+    bond: 20%(TLT)
+    cash or short-term bond 20%, 단기채(SHY 미 단기체)
+    gold 20% (GLD)
     monthly/quarterly/yearly rebalance
     """
 
@@ -26,7 +27,7 @@ class SAA_Permanent:
             exit()
 
         else:
-            self.universe = ['VITSX', 'TLT', 'GLD']
+            self.universe = ['VITSX', 'VBR', 'TLT', 'GLD']
 
         if lookback_period is None:
             date_start_d = trade_start_d
@@ -44,7 +45,7 @@ class SAA_Permanent:
         self.cash = ['SHY']
 
     def execute(self):
-        print('SAA_Permanent running')
+        print('SAA_GoldenButterfly running')
 
         all_universe = self.universe + self.cash
         universe_df = base_function.get_adj_close_data(all_universe, self.date_start_d)
@@ -68,15 +69,15 @@ class SAA_Permanent:
 
 """
 analyze)
-permanent portfolio -> 월별, 분기별, 년별로 cagr, dd, mdd 차이 많이 없음
-TC 비용 적은 yearly 택!!
+golden butterfly portfolio -> 월별, 분기별, 년별로 cagr, dd, mdd 차이 많이 없음
+TC 비용 적은 yearly 택
 """
 if __name__ == "__main__":
     start_date = "2005-05-24"
     end_date = "2023-01-10"
     period = "monthly"  # Recommended: monthly, quarterly, yearly
 
-    saa_permanent = SAA_Permanent(trade_start_d=start_date, trade_end_d=end_date)
+    saa_permanent = SAA_GoldenButterfly(trade_start_d=start_date, trade_end_d=end_date)
 
     month_cagr, month_dd, month_mdd, \
     quarter_cagr, quarter_dd, quarter_mdd, \
