@@ -67,6 +67,11 @@ class SAA_Permanent:
         return month_cagr, month_dd, month_mdd, quarter_cagr, quarter_dd, quarter_mdd, year_cagr, year_dd, year_mdd
 
 
+"""
+analyze)
+permanent portfolio -> 월별, 분기별, 년별로 cagr, dd, mdd 차이 많이 없음
+TC 비용 적은 yearly 택!!
+"""
 if __name__ == "__main__":
     start_date = "2005-05-24"
     end_date = "2023-01-10"

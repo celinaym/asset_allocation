@@ -79,14 +79,15 @@ def get_rebalancing_date(adj_close_data, period='month'):
     data.index = pd.to_datetime(data.index)
     data['year'] = data.index.year
     data['month'] = data.index.month
+    rebalancing_date = None
 
     if period == "month":
-        rebalancing_date = data.drop_duplicate(['year', 'month'], keep="last").index
+        rebalancing_date = data.drop_duplicates(['year', 'month'], keep="last").index
 
     if period == "quarter":
         quarter = [3, 6, 9, 12]  # 3,6,9,12월 말에 리밸런싱
         data = data.loc[data['month'].isin(quarter)]
-        rebalancing_date = data.drop_duplicate(['year', 'month'], keep="last").index
+        rebalancing_date = data.drop_duplicates(['year', 'month'], keep="last").index
 
     if period == "year":
         rebalancing_date = data.drop_duplicates(['year'], keep="last").index
@@ -128,10 +129,10 @@ def get_rebalanced_portfolio_result(adj_close_data, period="month", weight_df=No
 
         start = end     # start 갱신 (새로운 리밸런싱 period 얻기 위함)
 
-        print("갱신 전 총 자산: ", total_asset)
+        #print("갱신 전 총 자산: ", total_asset)
         total_asset = net_cum_return.iloc[-1].sum()     # 총 자산 갱신 (누적수익률)
-        print(net_cum_return)
-        print("갱신 후 총 자산: ", total_asset)
+        #print(net_cum_return)
+        #print("갱신 후 총 자산: ", total_asset)
 
         portfolio_df = pd.concat([portfolio_df, net_cum_return])
 
