@@ -73,13 +73,10 @@ def plot(adj_close_set):
     plt.show()
 
 
-def get_rebalancing_date(adj_close_data, period='month'):
+def get_rebalancing_date(adj_close_data, period="month"):
     data = adj_close_data.copy()  # deep copy
-    data = pd.DataFrame(data)
-    data.index = pd.to_datetime(data.index)
     data['year'] = data.index.year
     data['month'] = data.index.month
-    rebalancing_date = None
 
     if period == "month":
         rebalancing_date = data.drop_duplicates(['year', 'month'], keep="last").index
@@ -95,13 +92,13 @@ def get_rebalancing_date(adj_close_data, period='month'):
     return rebalancing_date
 
 
-'''
+"""
 1. 자산별 비중이 없는 경우, 동일 비중 부과
 2. 자산별 비중이 있는 경우, 차등 비중 부과
 3. 단) adj_close_data와 weight_df.index(date)의 시점이 다를 수 있으므로, 
     adj_close_data의 시작일을 weight_df.index의 첫날로 맞추어 줘야 함
     i.e) adj_close_data의 시작일은 1월, weight_df의 시작일은 3월 => 날짜 gap이 생기므로 adj_close_data의 시작일을 3월로 설정
-'''
+"""
 
 
 def get_rebalanced_portfolio_result(adj_close_data, period="month", weight_df=None):
